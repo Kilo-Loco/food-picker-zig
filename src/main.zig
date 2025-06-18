@@ -20,7 +20,11 @@ pub fn main() !void {
     const selectionIndex = rand.intRangeAtMost(u8, 0, selection.len - 1);
     const food = selection[selectionIndex];
 
-    try w.print("{s}?\n", .{food});
+    try w.print(
+        \\Randomly selected {s}?
+        \\[Y]es / [N]o
+        \\
+    , .{food});
     try buf_out.flush();
 
     const in = std.io.getStdIn();
@@ -45,11 +49,11 @@ pub fn main() !void {
 
         const choice = std.ascii.toLower(m[0]);
         switch (choice) {
-            'y' => |_| {
+            'y' => {
                 try w.print("We're eating {s} tonight!\n", .{food});
             },
-            else => |_| {
-                try w.print("Canceling selection\n", .{});
+            else => {
+                try w.print("Fine! You just won't eat then!\n", .{});
             },
         }
 
